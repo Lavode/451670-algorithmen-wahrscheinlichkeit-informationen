@@ -126,34 +126,64 @@ With $p = 0$:
 	                        & = 1
 \end{align*}
 
-\section{Pairwise independence $\neq$ independence}
+\section{Pairwise independent $\neq$ mutually independent}
+
+Let $A, B$ be distributed according to the discrete uniform distribution on
+${0, 1}$. Let $C := A \oplus B$. This nets the following value table.
+\\
+
+\begin{tabular}{|c|c|c|}
+	\hline
+	A & B & C \\
+	\hline
+	0 & 0 & 0 \\
+	\hline
+	0 & 1 & 1 \\
+	\hline
+	1 & 0 & 1 \\
+	\hline
+	1 & 1 & 1 \\
+	\hline
+\end{tabular}
+
+Hence it follows that:
+\begin{align*}
+	P(A=0) = P(B=0) = P(C=0) & = \frac{1}{2} \\
+	P(A=0, B=0) = P(A=0) * P(B=0) & = \frac{1}{4} \\
+	P(A=0, C=0) = P(A=0) * P(C=0) & = \frac{1}{4} \\
+	P(B=0, C=0) = P(B=0) * P(C=0) & = \frac{1}{4}
+\end{align*}
+
+Meaning that $A$, $B$ and $C$ are pairwise independent. 
+
+However:
+\[
+	P(A=0, B=0, C=0) = \frac{1}{4} \neq \frac{1}{8} = P(A=0) * P(B=0) * P(C=0)
+\]
+
+As such $A$, $B$ and $C$ are not mutually independent.
+
+This also matches with what one expects intuitively, as knowing one parameter
+of an XOR operation says nothing about the other two, whereas knowing any two
+diretly identifies the third.
 
 \section{Sum of dice}
 
 Observe first that, for any number $n \in \mathbb{N}$, one can get a multiple
 of six by adding a second number $m \in \mathbb{N}$, with $1 \leq m \leq 6$.
 
-As all dice throws are independent, we simply assume $x$ to be the sum after
-the first five dice throws. Due to the property mentioned above, there exists
-exactly one number $y$ in $1 \leq y \leq 6$ such that $x + y$ is a multiple of
-six.
+As all dice throws are independent, we assume $x$ to be the sum after the first
+five dice throws. Due to the property mentioned above, there exists exactly one
+number $y$ in $1 \leq y \leq 6$ such that $x + y$ is a multiple of six.
 
-Assuming the dice to produce values between $1$ and $6$ evenly, this means
-there is a chance of $\frac{1}{6}$ that the sum of six dice throws - or the sum
-of any number of dice throws even - is a multiple of six.
+As the dice produces values between $1$ and $6$ evenly, this means there is a
+chance of $\frac{1}{6}$ that the sum of six dice throws - or the sum of any
+number of dice throws even - is a multiple of six.
 
 \section{Coin tricks}
 
 Let $C_1$, $C_2$, $C_3$ be the three coins in questions. Then we have:
 
-\begin{align*}
-	P(C_1=H) &= P(C_2=T) = \frac{1}{2} \\
-	P(C_2=T) &= 1 \\
-	P(C_3=T) &= \frac{3}{4} \\
-	P(C_3=H) &= \frac{1}{4}
-\end{align*}
-
-Hence:
 \begin{align*}
 	P(T | C_1) & = \frac{1}{2} \\
 	P(T | C_2) & = 1 \\
@@ -175,7 +205,7 @@ tossed, given that the toss was tails:
 
 \subsection{Algorithm and correctness}
 
-Let $H := {Coin shows head}$, let $T := {Coin shows tails}$.
+Let $H := \texttt{Coin shows head}$, let $T := \texttt{Coin shows tails}$.
 
 Observe the following algorithm:
 \begin{itemize}
@@ -189,7 +219,7 @@ Observe the following algorithm:
 This algorithm is guaranteed to produce either heads or tails with probability
 $p = \frac{1}{2}$. This can be proven as follows.
 
-Let $p$ be probability of the weighted coin producing heads. Let $X$ be the
+Let $p$ be probability of the weighted coin producing head. Let $X$ be the
 result of the first, $Y$ the result of the second coin toss.
 
 Clearly we have:
@@ -241,8 +271,8 @@ Similarly, one can expand the algorithm to any power of two.
 
 \subsection{Maximum number of fair coin tosses}
 
-At most one can generate $\frac{k}{2}$ fair coin tosses - given that each pair
-is composed of non-equal coin tosses.
+At most one can generate $\frac{k}{2}$ fair coin tosses, if each pair is
+composed of non-equal coin tosses.
 
 \end{document}
 
