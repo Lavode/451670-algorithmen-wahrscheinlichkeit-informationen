@@ -85,7 +85,7 @@
 \section{Binary symmetrical channel}
 
 Let $X$ be the number of incorrectly transmitted bits. As each transmission is
-independent from the others, x follows a binomial distribution:
+independent from the others, $X$ follows a binomial distribution:
 
 \[
 	X \sim Bi(k, p)
@@ -105,8 +105,7 @@ transmission being correct is:
 	P(X \leq \frac{k-1}{2}) = \sum_{i=0}^{\frac{k-1}{2}}{\binom{k}{i} p^i * (1-p)^i}
 \]
 
-For both the case of $p = 0$ - ie no bit is transmitted wrongly - and the case
-of $p = \frac{1}{2}$, we get the results we expect.
+For both the case of $p = 0$ and $p = \frac{1}{2}$, we get the results we expect.
 
 With $p = \frac{1}{2}$:
 
@@ -129,7 +128,7 @@ With $p = 0$:
 \section{Pairwise independent $\neq$ mutually independent}
 
 Let $A, B$ be distributed according to the discrete uniform distribution on
-${0, 1}$. Let $C := A \oplus B$. This nets the following value table.
+$\{0, 1\}$. Let $C := A \oplus B$. This nets the following value table.
 \\
 
 \begin{tabular}{|c|c|c|}
@@ -174,7 +173,7 @@ of six by adding a second number $m \in \mathbb{N}$, with $1 \leq m \leq 6$.
 
 As all dice throws are independent, we assume $x$ to be the sum after the first
 five dice throws. Due to the property mentioned above, there exists exactly one
-number $y$ in $1 \leq y \leq 6$ such that $x + y$ is a multiple of six.
+number $y$ with $1 \leq y \leq 6$ such that $x + y$ is a multiple of six.
 
 As the dice produces values between $1$ and $6$ evenly, this means there is a
 chance of $\frac{1}{6}$ that the sum of six dice throws - or the sum of any
@@ -191,7 +190,7 @@ Let $C_1$, $C_2$, $C_3$ be the three coins in questions. Then we have:
 \end{align*}
 
 Using Bayes' theorem we can then calculate the probability of $C_2$ having been
-tossed, given that the toss was tails:
+tossed, given that the resulted in tails:
 
 \begin{align*}
 	P(C_2 | T) & = \frac{P(T | C_2) * P(C_2)}{\sum_{i=1}^3{P(T | C_i) * P(C_i)}} \\
@@ -260,9 +259,9 @@ The algorithm can be improved by looking at consecutive tuples of $2^n, n \in
 \mathbb{N}$ coin tosses.
 
 Let $X$ be the first pair of throws, $Y$ the second. If $X$ and $Y$ can not be
-used to simulate a fair coin toss - that is $(X = HH \lor X = TT) \land (Y = HH
-\lor Y = TT)$, then we can use them to simulate a fair coin toss as long as $X
-\neq Y$. This is, as before, given by the independence of coin tosses:
+used to simulate a fair coin toss - that is $X, Y \in \{HH, TT\}$ - then we can
+use them to simulate a fair coin toss as long as $X \neq Y$. This is, as
+before, given by the independence of coin tosses:
 \[
 	P(X=HH, Y=TT) = p^2 * (1-p)^2 = (1-p)^2 * p^2 = P(X=TT, Y=HH)
 \]
