@@ -1,0 +1,227 @@
+\documentclass[a4paper]{scrreprt}
+
+% Uncomment to optimize for double-sided printing.
+% \KOMAoptions{twoside}
+
+% Set binding correction manually, if known.
+% \KOMAoptions{BCOR=2cm}
+
+% Localization options
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Enhanced verbatim sections. We're mainly interested in
+% \verbatiminput though.
+\usepackage{verbatim}
+
+% PDF-compatible landscape mode.
+% Makes PDF viewers show the page rotated by 90°.
+\usepackage{pdflscape}
+
+% Advanced tables
+\usepackage{tabu}
+\usepackage{longtable}
+
+% Fancy tablerules
+\usepackage{booktabs}
+
+% Graphics
+\usepackage{graphicx}
+
+% Current time
+\usepackage[useregional=numeric]{datetime2}
+
+% Float barriers.
+% Automatically add a FloatBarrier to each \section
+\usepackage[section]{placeins}
+
+% Custom header and footer
+\usepackage{fancyhdr}
+
+\usepackage{geometry}
+\usepackage{layout}
+
+% Math tools
+\usepackage{mathtools}
+% Math symbols
+\usepackage{amsmath,amsfonts,amssymb}
+
+\pagestyle{plain}
+% \fancyhf{}
+% \lhead{}
+% \lfoot{}
+% \rfoot{}
+% 
+% Source code & highlighting
+\usepackage{listings}
+
+% Convenience commands
+\newcommand{\mailsubject}{451670- Algorithmen, Wahrscheinlichkeit, Informationen - Series 2}
+\newcommand{\maillink}[1]{\href{mailto:#1?subject=\mailsubject}
+                               {#1}}
+
+% Should use this command wherever the print date is mentioned.
+\newcommand{\printdate}{\today}
+
+\subject{451670 - Algorithmen, Wahrscheinlichkeit, Informationen}
+\title{Series 2}
+
+\author{Michael Senn \maillink{michael.senn@students.unibe.ch}}
+
+\date{\printdate}
+
+% Needs to be the last command in the preamble, for one reason or
+% another. 
+\usepackage{hyperref}
+
+
+\begin{document}
+\maketitle
+
+
+\setcounter{chapter}{1}
+\chapter{Series 2}
+
+\section{Throwing dice}
+
+Let $X$, $Y$ be the results of throwing a six-sided dice. Let $Z := X + Y$.
+
+\subsection{One die even}
+
+If $X$ is even then it follows the discrete uniform distribution on $\{2, 4,
+6\}$. As such, its expected value is given as $E[X | X \texttt{even}] = \frac{1}{3} * (2
++ 4 + 6) = 4$. Hence:
+\[
+	E[Z | X \texttt{even}] = E[X | X \texttt{even}] + E[Y] = 4 + 3.5 = 7.5
+\]
+
+\subsection{One die odd}
+
+If Y is odd, then $Y \sim Un(\{1, 3, 5\}) \Rightarrow E[Y | \texttt{Y odd}] = 3$.
+
+Hence:
+\[
+	E[Z | Y \texttt{odd}] = E[Y | Y \texttt{odd}] + E[X] = 3 + 3.5 = 6.5
+\]
+
+\subsection{Sum equal to 5}
+
+A sum of $5$ can be achieved via one of four combinations - $\{\{1, 4\}, \{2,
+3\}, \{3, 2\}, \{4, 1\}\}$ - all of which are equally likely. Hence:
+\[
+	E[X | Z = 5] = \frac{1}{4} * (1 + 2 + 3 + 4) = 2.5
+\]
+
+\subsection{Sum greater than 6}
+
+\begin{tabular}{|l|r|}
+	\hline
+	Z & Possible values for X \\
+	\hline
+	7 & \{1, 2, 3, 4, 5, 6\} \\
+	\hline
+	8 & \{2, 3, 4, 5, 6\} \\
+	\hline
+	9 & \{3, 4, 5, 6\} \\
+	\hline
+	10 & \{4, 5, 6\} \\
+	\hline
+	11 & \{5, 6\} \\
+	\hline
+	12 & \{6\} \\
+	\hline
+\end{tabular}
+
+Hence:
+\[
+	E[X | Z > 6] = \frac{\sum_{i=1}^6{i^2}}{\sum_{i=1}^6{i}} = \frac{91}{21} = 4.\overline{3}
+\]
+
+\section{Jensen squared}
+
+\section{Expected value of min/max of IID variables}
+
+\section{Random text generation}
+
+In the following, we assume the cat to produce a constant stream of random
+characters from our 32-character alphabet, from which we randomly pick an input
+of approriate length.
+
+This does not reflect a realistic scenario, where a cat would generate inputs
+of varying length before leaving the keyboard.
+
+This does also not reflect the scenario of a brute-force attack, where one
+would start with all inputs of length 1, followed by all inputs of length 2,
+and so forth.
+
+This specific difference can be neglected for non-trivially sized alphabets and
+input lengths, as the number of possible inputs of length $n$ based on an
+alphabet with $x$ characters will quickly converge towards $(x - 1)$ times the
+number of possible inputs with length less than $n$:
+
+\[
+	lim_{n\to\infty} \frac{x^n}{\sum_{i=1}^{n-1}{x^i}} = x-1
+\]
+
+\subsection{Cat attacks 10-char password}
+
+With our 32-char alphabet, there exist a total of $32^{10}$ inputs of length $10$
+- of which one is our password. As such, the chance of the cat randomly entering our password is:
+\[
+	\frac{1}{32^{10}}
+\]
+
+\subsection{Cat attacks 128-bit AES key}
+
+With our 32-char alphabet we are able to encode 5 bits per character ($2^5 =
+32$). As such, the 128-bit AES key would have to be encoded - with left- or
+right-padding - in 26 chars.
+
+As such, the chance of the cat randomly entering the AES key is:
+\[
+	\frac{1}{32^{26}}
+\]
+
+\subsection{Cat attacks 125-char string}
+
+As before, the chance of the cat randomly generating the 125-char string of this exercise's header is:
+\[
+	\frac{1}{32^{125}}
+\]
+
+\subsection{Cat on speed}
+
+In the following we assume the attack to be a targeted brute-force attack,
+where the input length is known. As this prevents any input sequence from being
+tried multiple times, half the possible inputs will have to be tried on
+average.
+
+If the inputs were generated randomly and repeating inputs were allowed, then
+the average number of inputs one has to generate to find one equal to the
+target is given as the minimum value of $x$ such that $(1-p)^x \leq 0.5$, with
+$p$ being the probability of one input being equal to the target.
+
+If inputs were generated with a frequency of $f := 40 * 10^{18}\ \texttt{Hz}$,
+then it would, on average, take:
+
+For a targeted attack on the 10-char password:
+\[
+	\frac{32^{10}}{2} * f^{-1} = 1.407 * 10^{-5}\ \texttt{s}
+\]
+
+
+For a targeted attack on the 128-bit AES key:
+\[
+	\frac{32^{26}}{2} * f^{-1} = 1.701 * 10^{19}\ \texttt{s, approx 120 times the age of our sun}
+\]
+
+
+For a targeted attack on the 125-char heading:
+\[
+	\frac{32^{125}}{2} * f^{-1} = 1.74 * 10^{168}\ \texttt{s, approx } 4 * 10^{150}\ \texttt{times the age of the universe}
+\]
+
+
+\end{document}
+
