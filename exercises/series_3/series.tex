@@ -1,0 +1,231 @@
+\documentclass[a4paper]{scrreprt}
+
+% Uncomment to optimize for double-sided printing.
+% \KOMAoptions{twoside}
+
+% Set binding correction manually, if known.
+% \KOMAoptions{BCOR=2cm}
+
+% Localization options
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Enhanced verbatim sections. We're mainly interested in
+% \verbatiminput though.
+\usepackage{verbatim}
+
+% PDF-compatible landscape mode.
+% Makes PDF viewers show the page rotated by 90°.
+\usepackage{pdflscape}
+
+% Advanced tables
+\usepackage{tabu}
+\usepackage{longtable}
+
+% Fancy tablerules
+\usepackage{booktabs}
+
+% Graphics
+\usepackage{graphicx}
+
+% Current time
+\usepackage[useregional=numeric]{datetime2}
+
+% Float barriers.
+% Automatically add a FloatBarrier to each \section
+\usepackage[section]{placeins}
+
+% Custom header and footer
+\usepackage{fancyhdr}
+
+\usepackage{geometry}
+\usepackage{layout}
+
+% Math tools
+\usepackage{mathtools}
+% Math symbols
+\usepackage{amsmath,amsfonts,amssymb}
+
+\pagestyle{plain}
+% \fancyhf{}
+% \lhead{}
+% \lfoot{}
+% \rfoot{}
+% 
+% Source code & highlighting
+\usepackage{listings}
+
+% Convenience commands
+\newcommand{\mailsubject}{451670- Algorithmen, Wahrscheinlichkeit, Informationen - Series 3}
+\newcommand{\maillink}[1]{\href{mailto:#1?subject=\mailsubject}
+                               {#1}}
+
+% Should use this command wherever the print date is mentioned.
+\newcommand{\printdate}{\today}
+
+\subject{451670 - Algorithmen, Wahrscheinlichkeit, Informationen}
+\title{Series 3}
+
+\author{Michael Senn \maillink{michael.senn@students.unibe.ch} - 16-126-880}
+
+\date{\printdate}
+
+% Needs to be the last command in the preamble, for one reason or
+% another. 
+\usepackage{hyperref}
+
+
+\begin{document}
+\maketitle
+
+
+\setcounter{chapter}{2}
+\chapter{Series 3}
+
+\section{Conditional expected value}
+
+\subsection{$G_1$}
+
+Let $X \sim Un(\{1, 2, 3, 4, 5, 6\})$ be the result of the die. Let $Y \sim
+Un(\{1, 2, 3, 4, 5, 6\})$ be Alice's guess.
+
+As such:
+
+\[
+	E[G_1] = P(X=Y) * 5 + P[X \neq Y] * -1 = \frac{1}{6} * 5 + \frac{5}{6} * -1 = 0
+\]
+
+\subsection{$G_2$}
+
+Let $X_o \sim Un(\{1, 3, 5\})$ be the result of the odd die, $X_d \sim Un(\{2,
+4, 6\})$ the result of the even die. Let $Y \sim Un(\{X_d, X_o\})$ whether Bob
+chose the even or odd die. Let $Z$ be the result of the die throw. We first
+show that $Z \sim Un(\{1, 2, 3, 4, 5, 6\})$, utilizing the independence of $Y$
+and $X_i$ respectively.
+\\
+
+\begin{tabular}{|l|l|}
+	\hline
+	$z$ & $P[Z = z]$  \\
+	\hline
+	$1$ & $P[Y = X_o] * P[X_o = 1] = 1/6$ \\
+	\hline
+	$2$ & $P[Y = X_e] * P[X_e = 2] = 1/6$ \\
+	\hline
+	$3$ & $P[Y = X_o] * P[X_o = 3] = 1/6$ \\
+	\hline
+	$4$ & $P[Y = X_e] * P[X_e = 4] = 1/6$ \\
+	\hline
+	$5$ & $P[Y = X_o] * P[X_o = 5] = 1/6$ \\
+	\hline
+	$6$ & $P[Y = X_e] * P[X_e = 6] = 1/6$ \\
+	\hline
+\end{tabular}
+\\
+\\
+As such, the result of the die is distributed identically to the die of the
+previous exercise, hence $E[G_2] = E[G_1] = 0$.
+
+\subsection{$G_3$}
+
+Let $X \sim Un(\{a, b, c\})$ be the result of the die throw, with $a, b, c$
+being either $1, 3, 5$ or $2, 4, 6$ with equal probability. Let $Y \sim Un(\{a,
+b, c\})$ be Alice's guess, as she knows which set $a, b, c$ are chosen from.
+
+As such:
+
+\[
+	E[G_3] = P(X = Y) * 5 + P(X \neq Y) * -1 = \frac{1}{3} * 5 + \frac{2}{3} * -1 = 1
+\]
+
+
+\section{Distributions}
+
+\subsection{Couple, looking for girl}
+
+Let $M = \text{Male}$, $F = \text{Female}$. Let $X_k$ be the number of children
+conceived. Note first, for any given $k$, the possible combinations.
+\\
+
+\begin{tabular}{|l|l|}
+	\hline
+	Children & Probability \\
+	\hline
+	$\text{F}$ & $(1/2)^1$ \\
+	\hline
+	$\text{MF}$ & $(1/2)^1 * (1/2)^1 = (1/2)^2$ \\
+	\hline
+	$\text{MMF}$ & $(1/2)^2 * (1/2)^1 = (1/2)^3$ \\
+	\hline
+	$\text{M \ldots\ MF}$ & $(1/2)^{k-1} * (1/2)^1 = (1/2)^k$ \\
+	\hline
+	$\text{M \ldots\ M}$ & $(1/2)^{k}$ \\
+	\hline
+\end{tabular}
+\\
+\\
+This allows us to derive our probability function:
+\[
+	P(X=x) =
+	\begin{cases}
+		\left(\frac{1}{2}\right)^x & x < k \\
+		2 * \left(\frac{1}{2}\right)^x & x = k \\
+		0 & x > k
+	\end{cases}
+\]
+
+And from there our expected value:
+\begin{align*}
+	E[X] & = \sum_{x=1}^{\infty}{P(X=x) x} \\
+	& = \sum_{x=1}^{k-1}{P(X=x) x} + P(X=k) k + \sum_{x=k+1}^{\infty}{P(X=x) x} \\
+	& = \sum_{x=1}^{k-1}{\frac{1}{2} x} + 2 \left(\frac{1}{2}\right)^k k + \sum_{x=k+1}^{\infty}{0 x} \\
+	& = 2^{1-k} (-k +2^k -1) + 2k \left(\frac{1}{2}\right)^k + 0 \\
+	& = 2 - 2^{1-k}
+\end{align*}
+
+\subsection{One of both}
+
+Let $M = \text{Male}$, $F = \text{Female}$. Let $X$ be the number of children
+conceived. Note first that the couple will stop having kids as soon as they
+have at least one boy and one girl. This means that the children, in order of
+birth, will always have the form of either $\{M \ldots M, F\}$ or $\{F \ldots
+F, M\}$. In words, an arbitrary number ($\geq 1$) of children of one gender,
+followed by a single child of the opposite gender.
+
+Let $Y$ be the number of either males or females which are born first, before
+the one child of the opposite gender is born. $Y$ follows a geometric
+distribution: $Y \sim Ge\left(\frac{1}{2}\right)$, and its expected value is
+given as $E[Y] = \frac{1}{p} = 2$.
+
+As seen above, the total number of children will be one higher - namely the
+last child of opposite gender. As such:
+
+\[
+	E[X] = E[Y] + 1 = 3
+\]
+
+\subsection{Throwing coins until $k$ times head}
+
+Let $X$ be the number of coin throws until a total of $k$ times head was
+achieved. Note that $X=x$ implies that the last throw was head, with the
+previous $x-1$ throws containing $k-1$ times head, and $(x-1)-(k-1)$ times
+tails.
+
+This means that the number of heads in the first $x-1$ throws follows a
+binomial distribution: $Y \sim Bi(x-1, p)$.
+
+As such, we can derive our probability function:
+\begin{align*}
+	P(X=x) & = P(Y = k-1) p \\
+	       & = p^{k-1} (1-p)^{(n-1) - (k-1)} \binom{n-1}{k-1} p \\
+	       & = p^k (1-p)^{n-k} \binom{n-1}{k-1}
+\end{align*}
+
+This implies that X follows a negative binomial distribution, whose expected value is given as:
+\[
+	E[X] = \frac{k}{p}
+\]
+
+\end{document}
+
