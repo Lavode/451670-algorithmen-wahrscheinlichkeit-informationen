@@ -140,8 +140,8 @@ Hence:
 
 \section{Jensen squared}
 
-Recall that, iff a function $f(x)$ is twice differentiable, with $f''(x) \geq 0
-\forall x$, it is convex.
+Recall that a function $f(x)$ is twice differentiable, with $f''(x) \geq 0
+\forall x$, iff it is convex.
 
 Let $f(x) := x^{2k}, k \in \mathbb{N}$. Then:
 \[
@@ -157,14 +157,14 @@ According to Jensen's inequality, for a convex function $f$, and $\lambda_i >
 	f(\sum_{i=1}^n{\lambda_i x_i}) \leq \sum_{i=1}^n{\lambda_i f(x_i)}
 \]
 
-Let $\lambda_i := P(X = x)$, $f(x) = x^k$. It follows that:
-\begin{align}
+Let $\lambda_i := P(X = x_i)$, $f(x) = x^k$. It follows that:
+\begin{align*}
 	E[X]^k & = (\sum_{i=1}^n{P(X=x_i) * x_i})^k \\
 	& = f(\sum_{i=1}^n{\lambda_i * x_i}) \\
 	& \leq \sum_{i=1}^n{\lambda_i * f(x_i)} \\
 	& = \sum_{i=1}^n{P(X=x_i) * x_i^k} \\
 	& = E[X^k]
-\end{align}
+\end{align*}
 
 \section{Expected value of min/max of IID variables}
 
