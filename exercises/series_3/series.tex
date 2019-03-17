@@ -46,6 +46,7 @@
 \usepackage{mathtools}
 % Math symbols
 \usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsthm}
 
 \pagestyle{plain}
 % \fancyhf{}
@@ -278,6 +279,56 @@ This leads to a runtime of:
 \[
   \text{Average runtime} = Y E[X] = (T + K) \frac{1}{\alpha} = \frac{T + K}{\alpha}
 \]
+
+\section{Online algorithm for random subset}
+
+We show by induction that, after having read $n$ items $s_1 \ldots s_n$, the
+chance of any $s_i$ being in the output $R := r_1 \ldots r_k$ is equal to
+$\frac{k}{n}$.
+
+\begin{proof}
+
+  Let $R_n = r_1 \ldots r_n$ be the output after iteration $n$.
+
+  Base case: $n := k$
+
+  \[
+    P(s_i \in R_n) = 1 = \frac{k}{n}\ \forall\ 1 \leq i \leq n
+  \]
+
+  Inductive step: $n \rightarrow n + 1$
+
+  We show that:
+  \[
+    P(s_i \in R_{n+1}) = \frac{k}{n+1}\ \forall\ 1 \leq i \leq n+1
+  \]
+
+  Let $1 \leq j \leq n+1$ be the random integer generated in the algorithm.
+
+  For $s_{n+1}$ it is clear that it is part of $R_{n+1}$ iff it was swapped in,
+  that is if $j \leq k$:
+  \[
+    P(s_{n+1} \in R) = P(j \leq k) = \frac{k}{n+1}
+  \]
+
+  For $s_i, 1 \leq i \leq n$ to be in $R_{n+1}$, it must have been in $R_{n}$,
+  and must not have been swapped out during the current iteration.
+
+  From the base case we know that:
+  \[
+    P(s_i) \in R_n = \frac{k}{n}
+  \]
+
+  $s_i$ is swapped out iff $j = i$, hence:
+  \[
+    P(s_i \text{ swapped out}) = \frac{1}{j} = \frac{1}{n+1}
+  \]
+
+  As such:
+  \[
+    P(s_i \in R_{n+1}) = P(s_i \in R_n \land s_i \text{ not swapped out}) = \frac{k}{n} \frac{1}{n+1} = \frac{k}{n+1}
+  \]
+\end{proof}
 
 \end{document}
 
