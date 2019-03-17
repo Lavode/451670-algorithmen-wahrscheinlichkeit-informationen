@@ -227,5 +227,29 @@ This implies that X follows a negative binomial distribution, whose expected val
 	E[X] = \frac{k}{p}
 \]
 
+\section{Traveling}
+
+This can be solved by splitting $X$ into $X = A_1 + A_2 + ... + A_n$, with
+$A_i$ being the number of days it takes him to travel to the i-th distinct
+destination when having already visited $i-1$ distinct destinations.
+
+Clearly, $A_1 = 1$, as no matter which train he picks on the first day, it is
+guaranteed to lead him to a previously-unvisited destination. Afterwards, any
+subsequent day has a chance of $\frac{n-1}{n}$ of leading him to a new
+destination. Once he did arrive at the second distinct destination, any
+subsequent day has a chance of $\frac{n-2}{n}$ of leading to yet another
+destination, and so on.
+
+As such, every $A_i$ follows the geometric distribution with $p =
+\frac{n-(i-1)}{n}$, and $E[A_i] = \frac{n}{n-(i-1)}$. Hence:
+
+\begin{align*}
+	E[X] & = E\left[\sum_{i=1}^{n}{A_i}\right] \\
+	     & = \sum_{i=1}^{n}{E[A_i]} \\
+	     & = \sum_{i=1}^{n}{\frac{n}{n-i+1}} \\
+	     & = \sum_{i=1}^{n}{\frac{n}{i}} \\
+	     & = n * \sum_{i=1}^{n}{\frac{1}{i}}
+\end{align*}
+
 \end{document}
 
