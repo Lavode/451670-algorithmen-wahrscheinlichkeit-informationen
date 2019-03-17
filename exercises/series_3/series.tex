@@ -251,5 +251,33 @@ As such, every $A_i$ follows the geometric distribution with $p =
 	     & = n * \sum_{i=1}^{n}{\frac{1}{i}}
 \end{align*}
 
+\section{Converting Monte-Carlo to Las-Vegas algorithm}
+
+We can create a Las-Vegas algorithm as follows:
+
+\begin{lstlisting}[mathescape=true]
+LAS-VEGAS($\Pi$):
+  DO
+    solution := M($\Pi$)
+  UNTIL V(solution)
+
+  RETURN solution
+\end{lstlisting}
+
+Clearly this algorithm is guaranteed to provide a correct result, as it applies
+$M$ onto the problem until the returned solution passes verification.
+Furthermore, each iteration of the algorithm will take $y := T + K$ steps, as it
+executes the Monte-Carlo algorithm $M$, followed by the verification algorithm
+$V$.
+
+Each iteration has a chance of $\alpha$ to produce a correct solution, so the
+number of required iterations $X$ follows a geometric distribution with
+probability $\alpha$: $X \sim Ge(\alpha)$.
+
+This leads to a runtime of:
+\[
+  \text{Average runtime} = Y E[X] = (T + K) \frac{1}{\alpha} = \frac{T + K}{\alpha}
+\]
+
 \end{document}
 
