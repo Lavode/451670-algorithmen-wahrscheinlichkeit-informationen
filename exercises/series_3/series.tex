@@ -288,17 +288,17 @@ $\frac{k}{n}$.
 
 \begin{proof}
 
-  Let $R_n = r_1 \ldots r_n$ be the output after iteration $n$.
+  Let $R_n = r_1 \ldots r_k$ be the output after iteration $n$.
 
   Base case: $n := k$
 
   \[
-    P(s_i \in R_n) = 1 = \frac{k}{n}\ \forall\ 1 \leq i \leq n
+    P(s_i \in R_n) = 1 = \frac{k}{n}\ \forall\ 1 \leq i \leq n = k
   \]
 
   Inductive step: $n \rightarrow n + 1$
 
-  We show that:
+  We aim to show that:
   \[
     P(s_i \in R_{n+1}) = \frac{k}{n+1}\ \forall\ 1 \leq i \leq n+1
   \]
@@ -326,8 +326,10 @@ $\frac{k}{n}$.
 
   As such:
   \[
-    P(s_i \in R_{n+1}) = P(s_i \in R_n \land s_i \text{ not swapped out}) = \frac{k}{n} \frac{1}{n+1} = \frac{k}{n+1}
+    P(s_i \in R_{n+1}) = P(s_i \in R_n \land s_i \text{ not swapped out}) = \frac{k}{n} \left(1 - \frac{1}{n+1}\right) = \frac{k}{n+1}
   \]
+
+  Hence $r_1 \ldots r_k$ is a random uniform subset of $s_1 \ldots s_n$ $\forall n \geq k$.
 \end{proof}
 
 \end{document}
