@@ -180,7 +180,7 @@ And from there our expected value:
 \begin{align*}
 	E[X] & = \sum_{x=1}^{\infty}{P(X=x) x} \\
 	& = \sum_{x=1}^{k-1}{P(X=x) x} + P(X=k) k + \sum_{x=k+1}^{\infty}{P(X=x) x} \\
-	& = \sum_{x=1}^{k-1}{\frac{1}{2} x} + 2 \left(\frac{1}{2}\right)^k k + \sum_{x=k+1}^{\infty}{0 x} \\
+	& = \sum_{x=1}^{k-1}{\left(\frac{1}{2}\right)^x x} + 2 \left(\frac{1}{2}\right)^k k + \sum_{x=k+1}^{\infty}{0 x} \\
 	& = 2^{1-k} (-k +2^k -1) + 2k \left(\frac{1}{2}\right)^k + 0 \\
 	& = 2 - 2^{1-k}
 \end{align*}
@@ -219,8 +219,8 @@ binomial distribution: $Y \sim Bi(x-1, p)$.
 As such, we can derive our probability function:
 \begin{align*}
 	P(X=x) & = P(Y = k-1) p \\
-	       & = p^{k-1} (1-p)^{(n-1) - (k-1)} \binom{n-1}{k-1} p \\
-	       & = p^k (1-p)^{n-k} \binom{n-1}{k-1}
+	       & = p^{k-1} (1-p)^{(x-1) - (k-1)} \binom{x-1}{k-1} p \\
+	       & = p^k (1-p)^{x-k} \binom{n-1}{k-1}
 \end{align*}
 
 This implies that X follows a negative binomial distribution, whose expected value is given as:
