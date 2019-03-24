@@ -88,29 +88,33 @@
 
 \section{Inversions}
 
-Let $\Pi_1 = \{\pi_{1_1}, \ldots, \pi_{1_n}\}$ be a random permutation of $\{1,
-\ldots, n\}$. Let $j, k \in \Pi_1, j > k$. Let $\Pi_2$ be equal to $\Pi_1$
-except for $j$ and $k$ flipped. Let $X$ be the number of inversions in $\Pi_1$.
+Let $S := \{1, \ldots, n\}$, let $\Pi := \{\pi_1, \ldots, \pi_n\}$ a
+permutation of $S$. Let $(\pi_j, \pi_k), j > k$ be a pair of elements in
+$\Pi$. Let $\Pi'$ be equal to $\Pi$, except for $\pi_j, \pi_k$ swapped. Let $X$
+be the number of inversions in $\Pi$.
 
 Then:
 \begin{align*}
-	& (j, k)\ \text{permutation of}\ \Pi_1 \\
-	\Rightarrow & j > k \\
-	\Rightarrow & (j, k)\ \text{not permutation of}\ \Pi_2
+	& (\pi_j, \pi_k)\ \text{permutation of}\ \Pi \\
+	\Rightarrow & \pi_j < \pi_k \\
+	\Rightarrow & (\pi_j, \pi_k)\ \text{not permutation of}\ \Pi'
 \end{align*}
 
 Similarly:
 \begin{align*}
-	& (j, k)\ \text{not permutation of}\ \Pi_1 \\
-	\Rightarrow & j < k \\
-	\Rightarrow & (j, k)\ \text{permutation of}\ \Pi_2
+	& (\pi_j, \pi_k)\ \text{not permutation of}\ \Pi \\
+	\Rightarrow & \pi_j > \pi_k \\
+	\Rightarrow & (\pi_j, \pi_k)\ \text{permutation of}\ \Pi'
 \end{align*}
+
+In words: For any pair of two elements, if it is an inversion in $\Pi$ it is
+not an inversion in $\Pi'$, and vice-versa.
 
 Let:
 \[
 	I_{j,k} =
 	\begin{cases}
-		1 & (j, k)\ \text{inversion of}\ \Pi_1 \\
+		1 & (\pi_j, \pi_k)\ \text{inversion of}\ \Pi \\
 		0 & \text{else}
 	\end{cases}
 \]
@@ -129,7 +133,6 @@ And finally:
 	& = \frac{(n-1) n}{4}
 \end{align*}
 
-
 \section{Random permutations}
 
 Adjusting the algorithm as described does not preserve the property of the
@@ -137,7 +140,7 @@ produced permutations following a uniform distribution.
 
 \begin{proof}
 	Let $S := \{1, 2, 3\}$. Let $\Pi$ be a random permutation of $S$
-	produced by the original algorithm.
+	produced by the algorithm.
 	
 	In order for $S = \Pi$, the algorithm must, in every iteration $i$,
 	produce the random number $j = i$.
@@ -218,7 +221,7 @@ Let $Y$ be a random variable, with $P(Y = n) = P(Y = -n) = \frac{1}{2}$. Then:
 	& E[Y] = 0 \\
 	& E[Y^2] = \frac{1}{2} n^2 + \frac{1}{2} n^2 = n^2 \\
 	& Var(Y) = n^2 \\
-	n \geq 1 \Rightarrow & n^2 > n (n + 1)
+	n \geq 1 \Rightarrow & n^2 > \frac{1}{3} n (n + 1)
 \end{align*}
 
 \section{Chebyshev-Inequality}
