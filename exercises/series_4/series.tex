@@ -1,0 +1,241 @@
+\documentclass[a4paper]{scrreprt}
+
+% Uncomment to optimize for double-sided printing.
+% \KOMAoptions{twoside}
+
+% Set binding correction manually, if known.
+% \KOMAoptions{BCOR=2cm}
+
+% Localization options
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Enhanced verbatim sections. We're mainly interested in
+% \verbatiminput though.
+\usepackage{verbatim}
+
+% PDF-compatible landscape mode.
+% Makes PDF viewers show the page rotated by 90°.
+\usepackage{pdflscape}
+
+% Advanced tables
+\usepackage{tabu}
+\usepackage{longtable}
+
+% Fancy tablerules
+\usepackage{booktabs}
+
+% Graphics
+\usepackage{graphicx}
+
+% Current time
+\usepackage[useregional=numeric]{datetime2}
+
+% Float barriers.
+% Automatically add a FloatBarrier to each \section
+\usepackage[section]{placeins}
+
+% Custom header and footer
+\usepackage{fancyhdr}
+
+\usepackage{geometry}
+\usepackage{layout}
+
+% Math tools
+\usepackage{mathtools}
+% Math symbols
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsthm}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+
+\pagestyle{plain}
+% \fancyhf{}
+% \lhead{}
+% \lfoot{}
+% \rfoot{}
+% 
+% Source code & highlighting
+\usepackage{listings}
+
+% Convenience commands
+\newcommand{\mailsubject}{451670- Algorithmen, Wahrscheinlichkeit, Informationen - Series 4}
+\newcommand{\maillink}[1]{\href{mailto:#1?subject=\mailsubject}
+                               {#1}}
+
+% Should use this command wherever the print date is mentioned.
+\newcommand{\printdate}{\today}
+
+\subject{451670 - Algorithmen, Wahrscheinlichkeit, Informationen}
+\title{Series 4}
+
+\author{Michael Senn \maillink{michael.senn@students.unibe.ch} - 16-126-880}
+
+\date{\printdate}
+
+% Needs to be the last command in the preamble, for one reason or
+% another. 
+\usepackage{hyperref}
+
+
+\begin{document}
+\maketitle
+
+
+\setcounter{chapter}{3}
+\chapter{Series 4}
+
+\section{Inversions}
+
+Let $\Pi_1 = \{\pi_{1_1}, \ldots, \pi_{1_n}\}$ be a random permutation of $\{1,
+\ldots, n\}$. Let $j, k \in \Pi_1, j > k$. Let $\Pi_2$ be equal to $\Pi_1$
+except for $j$ and $k$ flipped. Let $X$ be the number of inversions in $\Pi_1$.
+
+Then:
+\begin{align*}
+	& (j, k)\ \text{permutation of}\ \Pi_1 \\
+	\Rightarrow & j > k \\
+	\Rightarrow & (j, k)\ \text{not permutation of}\ \Pi_2
+\end{align*}
+
+Similarly:
+\begin{align*}
+	& (j, k)\ \text{not permutation of}\ \Pi_1 \\
+	\Rightarrow & j < k \\
+	\Rightarrow & (j, k)\ \text{permutation of}\ \Pi_2
+\end{align*}
+
+Let:
+\[
+	I_{j,k} =
+	\begin{cases}
+		1 & (j, k)\ \text{inversion of}\ \Pi_1 \\
+		0 & \text{else}
+	\end{cases}
+\]
+
+As per above:
+\begin{align*}
+	& P(I_{j, k} = 1) = \frac{1}{2}\ \forall j, k \\
+	\Rightarrow & E(I_{j, k}) = \frac{1}{2}
+\end{align*}
+
+And finally:
+\begin{align*}
+	E[X] & = \sum_{j=1}^n{\sum_{k=j+1}^n{\frac{1}{2}}} \\
+	& = \sum_{j=1}^n{\frac{1}{2} (n-j)} \\
+	& = \frac{1}{2} \sum_{j=1}^n{n-j} \\
+	& = \frac{(n-1) n}{4}
+\end{align*}
+
+
+\section{Random permutations}
+
+Adjusting the algorithm as described does not preserve the property of the
+produced permutations following a uniform distribution.
+
+\begin{proof}
+	Let $S := \{1, 2, 3\}$. Let $\Pi$ be a random permutation of $S$
+	produced by the original algorithm.
+	
+	In order for $S = \Pi$, the algorithm must, in every iteration $i$,
+	produce the random number $j = i$.
+
+	With the original algorithm we have:
+	\begin{align*}
+		P(S = \Pi) & = P(j = 1 | i = 1) P(j = 2 | i = 2) P(j = 3 | i = 3) \\
+		& = \frac{1}{3} * \frac{1}{2} * 1 \\
+		& = \frac{1}{6}
+	\end{align*}
+
+	Which is the expected result, as there are $3! = 6$ permutations of $S$.
+
+	With the adjusted algorithm we have:
+	\begin{align*}
+		P(S = \Pi) & = P(j = 1 | i = 1) P(j = 2 | i = 2) P(j = 3 | i = 3) \\
+		& = \frac{1}{3} * \frac{1}{3} * \frac{1}{3} \\
+		& = \frac{1}{27} \\
+		& \neq \frac{1}{6}
+	\end{align*}
+\end{proof}
+
+\section{Markov-(In)equality}
+
+The Markov inequality fulfills the equality case for a given $m$ for a random
+variable $Y$ which takes one of two values $\{0, m\}$.
+
+\begin{proof}
+	Let $m \in \mathbb{N}$. Let $Y$ be a random variable which takes one of
+	two values $\{0, m\}$.
+
+	We then have:
+	\[
+		E[Y] = P(Y = 0) * 0 + P(Y = m) m = P(Y = m) m
+	\]
+
+	As $Y$ takes one of two values, and $0 < m$:
+	\[
+		P(Y \geq m) = P(Y = m)
+	\]
+
+	As such:
+	\[
+		\frac{E[Y]}{m} = \frac{P(Y = m) m}{m} = P(Y = m) = P(Y \geq m)
+	\]
+\end{proof}
+
+\section{Variance}
+
+\subsection{Expected value and variance of discrete uniform distribution}
+
+Let $X \sim Un(\{-n, \ldots, n\})$.
+
+Note that $n + -n = 0\ \forall n \in \mathbb{N}$. Then:
+\begin{align*}
+	E[X] & = \sum_{i=-n}^n{P(X=i) * i} \\
+	& = n * 0 + 0 \\
+	& = 0
+\end{align*}
+
+Note further that $x^2 = \abs{x}^2\ \forall n \in \mathbb{N}$. Then:
+\begin{align*}
+	E[X^2] & = \sum_{i=-n}^n{P(X = i) * i^2} \\
+	& = 0 + 2 * \sum_{i=1}^n{P(X = i) * i^2} \\
+	& = 2 * \sum_{i=1}^n{\frac{i^2}{2n + 1}} \\
+	& = \frac{1}{3} n (n + 1)
+\end{align*}
+
+And lastly:
+\[
+	Var(X) = E[X^2] - E[X] = \frac{1}{3} n (n+1)
+\]
+
+\subsection{Same minimum and maximum, bigger variance}
+
+Let $Y$ be a random variable, with $P(Y = n) = P(Y = -n) = \frac{1}{2}$. Then:
+\begin{align*}
+	& E[Y] = 0 \\
+	& E[Y^2] = \frac{1}{2} n^2 + \frac{1}{2} n^2 = n^2 \\
+	& Var(Y) = n^2 \\
+	n \geq 1 \Rightarrow & n^2 > n (n + 1)
+\end{align*}
+
+\section{Chebyshev-Inequality}
+
+Let $X \sim Bi(1000, 0.4)$. Hence:
+\begin{align*}
+	E[X] & = 1000 * 0.4 = 400 \\
+	Var(X) & = E[X] * (1-p) = 240
+\end{align*}
+
+Then:
+\begin{align*}
+	P(X < 350 \lor X > 450) & = P(\abs{X - 400} > 50) \\
+				& = P(\abs{X - E[X]} > 50) \\
+	   & \leq \frac{Var(X)}{50^2} \\
+	   & = 0.96
+\end{align*}
+
+\end{document}
+
