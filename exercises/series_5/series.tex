@@ -1,0 +1,161 @@
+\documentclass[a4paper]{scrreprt}
+
+% Uncomment to optimize for double-sided printing.
+% \KOMAoptions{twoside}
+
+% Set binding correction manually, if known.
+% \KOMAoptions{BCOR=2cm}
+
+% Localization options
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Enhanced verbatim sections. We're mainly interested in
+% \verbatiminput though.
+\usepackage{verbatim}
+
+% PDF-compatible landscape mode.
+% Makes PDF viewers show the page rotated by 90°.
+\usepackage{pdflscape}
+
+% Advanced tables
+\usepackage{tabu}
+\usepackage{longtable}
+
+% Fancy tablerules
+\usepackage{booktabs}
+
+% Graphics
+\usepackage{graphicx}
+
+% Current time
+\usepackage[useregional=numeric]{datetime2}
+
+% Float barriers.
+% Automatically add a FloatBarrier to each \section
+\usepackage[section]{placeins}
+
+% Custom header and footer
+\usepackage{fancyhdr}
+
+\usepackage{geometry}
+\usepackage{layout}
+
+% Math tools
+\usepackage{mathtools}
+% Math symbols
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsthm}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+
+\pagestyle{plain}
+% \fancyhf{}
+% \lhead{}
+% \lfoot{}
+% \rfoot{}
+% 
+% Source code & highlighting
+\usepackage{listings}
+
+% Convenience commands
+\newcommand{\mailsubject}{451670- Algorithmen, Wahrscheinlichkeit, Informationen - Series 5}
+\newcommand{\maillink}[1]{\href{mailto:#1?subject=\mailsubject}
+                               {#1}}
+
+% Should use this command wherever the print date is mentioned.
+\newcommand{\printdate}{\today}
+
+\subject{451670 - Algorithmen, Wahrscheinlichkeit, Informationen}
+\title{Series 5}
+
+\author{Michael Senn \maillink{michael.senn@students.unibe.ch} - 16-126-880}
+
+\date{\printdate}
+
+% Needs to be the last command in the preamble, for one reason or
+% another. 
+\usepackage{hyperref}
+
+
+\begin{document}
+\maketitle
+
+
+\setcounter{chapter}{4}
+\chapter{Series 5}
+
+\section{Fixed points of permutation}
+
+Let $S = \{1, 2, \ldots, n\}$, let $\Pi$ be a random permutation of $S$.
+Let:
+\[
+	I_{j} =
+	\begin{cases}
+		1 & \pi_j = j \\
+		0 & \text{else}
+	\end{cases}
+\]
+
+Then the number of fixed points in $\Pi$ is given as $X := \sum_{i=1}^n{I_i}$.
+
+And:
+\begin{align*}
+	E[X] & = \sum_{i=1}^n{P(I_i = i) * 1} = \sum_{i=1}^n{\frac{1}{n}} = 1 \\
+	E[X^2] & = \sum_{i=1}^n{P(I_i = i) * 1^2} = \sum_{i=1}^n{\frac{1}{n}} = 1 \\
+	Var(X) & = E[X^2] - E[X]^2 = 0
+\end{align*}
+
+\section{Variance}
+
+\begin{proof}
+	We aim to show that, for any random variable $X$ and constant $c > 0$,
+	$Var(cX) = c^2 Var(X)$.
+
+	\begin{align*}
+		Var(cX) & = E[(cX)^2] - E[cX]^2 \\
+			& = E[c^2 X^2] - E[cX]^2 \\
+			& = c^2 E[X^2] - c^2 E[X]^2 \\
+			& = c^2 (E[X^2] - E[X]^2) \\
+			& = c^2 Var(X)
+	\end{align*}
+\end{proof}
+
+\section{One-sided Chebyshev inequality}
+
+\section{Variance of collector's problem}
+
+\subsection{Upper bound for variance}
+
+As we have seen in the previous series, $X = \sum_{i=1}^n{X_i}$, with each
+$X_i$ following a geometric distribution with $p = \frac{n-i+1}{n}$.
+
+By the independence of the $X_i$ we get:
+\begin{align*}
+	Var(X) & = \sum_{i=1}^n{Var(X_i)} \\
+	& = \sum_{i=1}^n{\frac{1 - \frac{n-i+1}{n}}{\left(\frac{n-i+1}{n}\right)^2}} \\
+	& = \sum_{i=1}^n{\frac{n^2 - \frac{n^2 (n-i+1)}{n}}{n^2 \left(\frac{n-i+1}{n}\right)^2}} \\
+	& = \sum_{i=1}^n{\frac{n^2 - n (n-i+1)}{(n-i+1)^2}} \\
+	& \overset{0 < i \leq n}{<} \sum_{i=1}^n{\frac{n^2}{(n-i+1)^2}} \\
+	& = n^2 \sum_{i=1}^n{\frac{1}{(n-i+1)^2}} \\
+	& = n^2 \sum_{i=1}^n{\frac{1}{i^2}} \\
+	& = \frac{n^2 \pi^2}{6}
+\end{align*}
+
+\subsection{Estimating probability of waiting four-times as long as normal}
+
+Let $Var'(X)$ be our upper bound for the variance from the previous section.
+
+\begin{align*}
+	P[X \geq 4 E[X]] & = P(\abs{X - E[X]} \geq 3 E[X]) \\
+	& \leq \frac{Var(X)}{(3 E[X])^2} \\
+	& \leq \frac{Var'(X)}{(3 E[X])^2} \\
+	& = \frac{\pi^2 n^2}{6 (3 n H(n))^2} \\
+	& = \frac{\pi^2}{54 H(n)^2} \\
+	& \leq \frac{\pi^2}{54 ln(n)^2}
+\end{align*}
+
+
+\end{document}
+
