@@ -109,9 +109,12 @@ And:
 
 \section{Variance}
 
+We aim to show that, for any random variable $X$ and constant $c > 0$
+\[
+	Var(cX) = c^2 Var(X)
+\]
+	
 \begin{proof}
-	We aim to show that, for any random variable $X$ and constant $c > 0$,
-	$Var(cX) = c^2 Var(X)$.
 
 	\begin{align*}
 		Var(cX) & = E[(cX)^2] - E[cX]^2 \\
@@ -123,6 +126,50 @@ And:
 \end{proof}
 
 \section{One-sided Chebyshev inequality}
+
+We aim to show that, for any random variable $X \in \mathbb{N}$, with $Var(X) = \sigma^2$, and any $t > 0$:
+\[
+	P[X - E[X] \geq t \sigma] \leq \frac{1}{1 + t^2}
+\]
+
+\begin{proof}
+	Let $Y := X - E[X]$. Then:
+	\begin{align*}
+		E[Y] & = E[X - E[X]] = E[X] - E[X] = 0 \\
+		Var(Y) & = E[(Y - E[Y])^2] \\
+		       & = E[(X - E[X] - E[X - E[X]])^2] \\
+		       & = E[(X - E[X] - E[X] + E[X])^2] \\
+		       & = E[(X - E[X])^2] \\
+		       & = Var(X) = \sigma^2
+	\end{align*}
+
+	Then, for any $a > 0$, using Markov's inequality:
+	\begin{align*}
+		P(Y \geq t \sigma) & = P(Y + a \geq t \sigma + a) \\
+				   & \leq \frac{E[Y + a]}{t \sigma + a} \\
+		     & = \frac{a}{t \sigma + a}
+	\end{align*}
+
+	Adding $a$ is required as Markov's inequality requires a non-negative
+	random variable. If $Y$ was non-negative, and $E[Y] = 0$, this would
+	imply that $P(Y = 0) = 1$, and the inequality - while it would hold -
+	would not add much value: $P(Y \geq t \sigma) \leq \frac{0}{t \sigma} = 0$.
+
+	Specifically for $a := \frac{\sigma}{t}$:
+	\begin{align*}
+		P(Y + \frac{\sigma}{t} \geq t \sigma + \frac{\sigma}{t}) & \leq \frac{\frac{\sigma}{t}}{t \sigma + \frac{\sigma}{t}} \\
+		& = \frac{\sigma}{t (t \sigma + \frac{\sigma}{t})} \\
+		& = \frac{\sigma}{t^2 \sigma + \sigma} \\
+		& = \frac{1}{t^2 + 1}
+	\end{align*}
+
+	Hence:
+	\begin{align*}
+		P(Y + \frac{\sigma}{t} \geq t \sigma + \frac{\sigma}{t}) & = P(Y \geq t \sigma) \\
+		& = P(X - E[X] \geq t \sigma) \\
+		& \leq \frac{1}{t^2 + 1}
+	\end{align*}
+\end{proof}
 
 \section{Variance of collector's problem}
 
