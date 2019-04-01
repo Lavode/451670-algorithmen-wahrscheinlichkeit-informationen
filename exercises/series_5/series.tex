@@ -102,9 +102,30 @@ Then the number of fixed points in $\Pi$ is given as $X := \sum_{i=1}^n{I_i}$.
 
 And:
 \begin{align*}
-	E[X] & = \sum_{i=1}^n{P(I_i = i) * 1} = \sum_{i=1}^n{\frac{1}{n}} = 1 \\
-	E[X^2] & = \sum_{i=1}^n{P(I_i = i) * 1^2} = \sum_{i=1}^n{\frac{1}{n}} = 1 \\
-	Var(X) & = E[X^2] - E[X]^2 = 0
+	E[X] & = \sum_{i=1}^n{P(I_i = 1) * 1} = \sum_{i=1}^n{\frac{1}{n}} = 1 \\
+	E[X^2] & = E\left[\left(\sum_{i=1}^n{P(I_i = i)}\right)^2\right] \\
+	       & = E\left[\sum_{i=1}^n{\sum_{j=1}^n{P(I_i \cdot I_j = 1)}}\right] \\
+\end{align*}
+
+Note that:
+\begin{align*}
+	P(I_i \cdot I_j = 1) & = P(I_i \cdot I_j = 1 | i = j) + P(I_i \cdot I_j = 1 | i \neq j) \\
+	\text{Where}: \\
+	P(I_i \cdot I_j = 1 | i = j) & = \frac{1}{n} \\
+	P(I_i \cdot I_j = 1 | i \neq j) & = P(I_i = 1) P(I_i \cdot I_j = 1 | I_i = 1) \\
+					& = \frac{1}{n} \frac{1}{n-1}
+\end{align*}
+
+Hence:
+\begin{align*}
+	E[X^2] & = \sum_{i=1}^n{\frac{1}{n}} + \sum_{i=1}^n{\sum_{j=1}^{n-1}{\frac{1}{n} \frac{1}{n-1}}}
+	& = 1 + 1 \\
+	& = 2
+\end{align*}
+
+And finally:
+\begin{align*}
+	Var(X) = E[X^2] - E[X] = 2 - 1 = 1
 \end{align*}
 
 \section{Variance}
