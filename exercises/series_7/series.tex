@@ -1,0 +1,152 @@
+\documentclass[a4paper]{scrreprt}
+
+% Uncomment to optimize for double-sided printing.
+% \KOMAoptions{twoside}
+
+% Set binding correction manually, if known.
+% \KOMAoptions{BCOR=2cm}
+
+% Localization options
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Enhanced verbatim sections. We're mainly interested in
+% \verbatiminput though.
+\usepackage{verbatim}
+
+% PDF-compatible landscape mode.
+% Makes PDF viewers show the page rotated by 90°.
+\usepackage{pdflscape}
+
+% Advanced tables
+\usepackage{tabu}
+\usepackage{longtable}
+
+% Fancy tablerules
+\usepackage{booktabs}
+
+% Graphics
+\usepackage{graphicx}
+
+% Current time
+\usepackage[useregional=numeric]{datetime2}
+
+% Float barriers.
+% Automatically add a FloatBarrier to each \section
+\usepackage[section]{placeins}
+
+% Custom header and footer
+\usepackage{fancyhdr}
+
+\usepackage{geometry}
+\usepackage{layout}
+
+% Math tools
+\usepackage{mathtools}
+% Math symbols
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsthm}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+
+\pagestyle{plain}
+% \fancyhf{}
+% \lhead{}
+% \lfoot{}
+% \rfoot{}
+% 
+% Source code & highlighting
+\usepackage{listings}
+
+% Convenience commands
+\newcommand{\mailsubject}{451670- Algorithmen, Wahrscheinlichkeit, Informationen - Series 7}
+\newcommand{\maillink}[1]{\href{mailto:#1?subject=\mailsubject}
+                               {#1}}
+
+% Should use this command wherever the print date is mentioned.
+\newcommand{\printdate}{\today}
+
+\subject{451670 - Algorithmen, Wahrscheinlichkeit, Informationen}
+\title{Series 7}
+
+\author{Michael Senn \maillink{michael.senn@students.unibe.ch} - 16-126-880}
+
+\date{\printdate}
+
+% Needs to be the last command in the preamble, for one reason or
+% another. 
+\usepackage{hyperref}
+
+
+\begin{document}
+\maketitle
+
+
+\setcounter{chapter}{6}
+\chapter{Series 7}
+
+\section{Yet another biased coin}
+
+Let $X_i \sim Un(\{0, 1\})$, with $P(X_i = 1) = p \geq \alpha > 0$. Let $X :=
+\sum_{i=1}^n(X_i) = \beta n$ for $0 \leq \beta \leq 1$. We aim to find $n$,
+such that:
+
+\[
+	P\left[\abs{p - \beta} \geq \gamma p\right] \leq \epsilon
+\]
+
+For a given $\epsilon > 0, \gamma > 0$.
+
+\begin{align*}
+	P[\abs{p - \beta} \geq \gamma p] & = P[\abs{p - \beta} \cdot n \geq \gamma p n] \\
+	\intertext{As $n \geq 1$}
+	& = P[\abs{p n - \beta n} \geq \gamma p n] \\
+	\intertext{With $\mu = E[X]$}
+	& = P[\abs{\mu - X} \geq \gamma \mu] \\
+	& \leq \epsilon \\
+\end{align*}
+
+Now the LHS has a known form for which a Chernoff bound exists. Hence:
+
+\begin{align*}
+	\epsilon & = 2 \exp\left(-\frac{\mu \gamma^2}{3}\right) \\
+	\Rightarrow -3 \ln\left(\frac{\epsilon}{2}\right) & = n p \gamma^2 \\
+	\Rightarrow n & = - \frac{3 \ln\left(\frac{\epsilon}{2}\right)}{p \gamma^2} \\
+	\intertext{As $\alpha \leq p$}
+	n & \geq - \frac{3 \ln\left(\frac{\epsilon}{2}\right)}{\alpha \gamma^2}
+\end{align*}
+
+\subsection{Numeric example}
+
+Let $\alpha = 0.25, \gamma = 0.1, \epsilon = 0.01$. Then:
+
+\begin{align*}
+	n & \geq - \frac{3 \ln\left(\frac{\epsilon}{2}\right)}{\alpha \gamma^2} \\
+	& = - \frac{3 \ln\left(\frac{0.01}{2}\right)}{0.25 0.1^2} \\
+	\Rightarrow n & \geq 6358
+\end{align*}
+
+\section{Extending Chernoff bounds}
+
+Let $Z_i \in [0, a]$, let $Z := \sum_{i=1}^n{Z_i}$, $\mu = E[Z] \in [0, n \cdot
+a]$. We can find a comparable chernoff bound for $Z - E[Z]$ as follows.
+
+Let $Y := \frac{Z}{n \cdot a} \Rightarrow Y \in [0, 1]$. Then:
+
+\begin{align*}
+	P[Y \geq (1 + \delta) E[Y]] & \leq exp\left(- \frac{E[Y] \delta^2}{3}\right) \\
+	\intertext{Then}
+	P[n a Y \geq (1 + \delta) n a E[Y]] & \leq exp\left(- \frac{E[Y] \delta^2}{3}\right) \\
+	\intertext{As $E[Z] = n a E[Y]$}
+	P[Z \geq (1 + \delta) E[Z]]  & \leq exp\left(- \frac{E[Y] \delta^2}{3}\right) \\
+	\intertext{As $E[Y] = \frac{E[Z]}{n a}$}
+	P[Z \geq (1 + \delta) E[Z]]  & \leq exp\left(- \frac{\mu \delta^2}{3 n a}\right)
+\end{align*}
+
+Since $n \cdot a \geq 1$, such a bound will be notably worse for big $n \cdot
+a$ than one for a sum in $[0, 1]$
+
+
+\end{document}
+
