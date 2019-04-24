@@ -1,0 +1,119 @@
+\documentclass[a4paper]{scrreprt}
+
+% Uncomment to optimize for double-sided printing.
+% \KOMAoptions{twoside}
+
+% Set binding correction manually, if known.
+% \KOMAoptions{BCOR=2cm}
+
+% Localization options
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Enhanced verbatim sections. We're mainly interested in
+% \verbatiminput though.
+\usepackage{verbatim}
+
+% PDF-compatible landscape mode.
+% Makes PDF viewers show the page rotated by 90°.
+\usepackage{pdflscape}
+
+% Advanced tables
+\usepackage{tabu}
+\usepackage{longtable}
+
+% Fancy tablerules
+\usepackage{booktabs}
+
+% Graphics
+\usepackage{graphicx}
+
+% Current time
+\usepackage[useregional=numeric]{datetime2}
+
+% Float barriers.
+% Automatically add a FloatBarrier to each \section
+\usepackage[section]{placeins}
+
+% Custom header and footer
+\usepackage{fancyhdr}
+
+\usepackage{geometry}
+\usepackage{layout}
+
+% Math tools
+\usepackage{mathtools}
+% Math symbols
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsthm}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+
+\pagestyle{plain}
+% \fancyhf{}
+% \lhead{}
+% \lfoot{}
+% \rfoot{}
+% 
+% Source code & highlighting
+\usepackage{listings}
+
+% Convenience commands
+\newcommand{\mailsubject}{451670- Algorithmen, Wahrscheinlichkeit, Informationen - Series 7}
+\newcommand{\maillink}[1]{\href{mailto:#1?subject=\mailsubject}
+                               {#1}}
+
+% Should use this command wherever the print date is mentioned.
+\newcommand{\printdate}{\today}
+
+\subject{451670 - Algorithmen, Wahrscheinlichkeit, Informationen}
+\title{Series 8}
+
+\author{Michael Senn \maillink{michael.senn@students.unibe.ch} - 16-126-880}
+
+\date{\printdate}
+
+% Needs to be the last command in the preamble, for one reason or
+% another. 
+\usepackage{hyperref}
+
+
+\begin{document}
+\maketitle
+
+
+\setcounter{chapter}{7}
+\chapter{Series 8}
+
+\section{Probability of given vertex selected by algorithm}
+
+The algorithm $S$ will select a given vertex $v \in V$ exactly if in its first
+step it selects an edge $e \in E$ of which one component is equal to $v$, and
+in its second step choses $v$ rather than the second component of the selected
+edge.
+
+As there are a total of $m$ edges, of which $deg(v)$ have $v$ as one of their 
+components, the probability is given as:
+
+\begin{align*}
+	P[S = v] & = \frac{deg(v)}{m} \cdot \frac{1}{2} \\
+		 & = \frac{deg(v)}{2m}
+\end{align*}
+
+\section{Expected value of size estimator}
+
+Let $l(v) := \frac{2m}{deg(v)}$. By the definition and properties of the
+expected value, $E[l(S)]$ is given as:
+
+\begin{align*}
+	E[l(S)] & = \sum_{s \in S}{P(S = s) \cdot l(s)} \\
+		& = \sum_{s \in S}{\frac{deg(s)}{2m} \cdot \frac{2m}{deg(s)}} \\
+		& = \sum_{s \in S}{1} \\
+		& = n
+\end{align*}
+
+Hence, $l(v)$ is an unbiased estimator for $n$, the size of the graph.
+
+\end{document}
+
