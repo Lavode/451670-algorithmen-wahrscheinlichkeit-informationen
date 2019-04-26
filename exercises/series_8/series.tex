@@ -115,5 +115,52 @@ expected value, $E[l(S)]$ is given as:
 
 Hence, $l(v)$ is an unbiased estimator for $n$, the size of the graph.
 
+\section{Variance of size estimator}
+
+\begin{proof}
+  We aim to show that $Var(l(S)) \leq n^2d$.
+
+  We first derive $E[l(S)^2]$, as:
+
+  \begin{align*}
+    E[l(S)^2] & = \sum_{s \in S}{P(S = s) \cdot l(S)^2} \\
+    & = \sum_{s \in S}{\frac{deg(s)}{2m} \cdot \left(\frac{2m}{deg(s)}\right)^2} \\
+    & = \sum_{s \in S}{\frac{2m}{deg(s)}} \\
+    & = 2m \sum_{s \in S}{\frac{1}{deg(s)}}
+  \end{align*}
+
+  Hence:
+
+  \begin{align*}
+    Var(l(S)) & = E[l(S)^2] - E[l(S)]^2 \\
+              & = 2m \sum_{s \in S}{\left(\frac{1}{deg(s)}\right)} - n^2 \\
+    \intertext{$deg(v) \geq 1 \forall v \in V$}
+    & \leq 2m \sum_{s \in S}{(deg(s))} - n^2 \\
+    \intertext{$deg(v) \geq 1\ \forall v \in V \Rightarrow 2m \geq n$}
+    & \leq n \sum_{s \in S}{(deg(s))} - n^2 \\
+    \intertext{$deg(v) \leq d\ \forall v \in V$}
+    & \leq n \sum_{s \in S}{(d)} - n^2 \\
+    & = n^2 d - n^2 \\
+    & \leq n^2 d
+  \end{align*}
+\end{proof}
+
+\section{Variance of the mean}
+
+\begin{proof}
+  Let $Z := \frac{1}{t} \sum_{i=1}^t{l(S_i)}$, where $S_i$ are IID. Then
+
+  \begin{align*}
+    Var(Z) & = Var(\frac{1}{t} \sum_{i=1}^t{l(S_i)}) \\
+    \intertext{$Var(aX) = a^2 Var(X)$}
+    & = \frac{1}{t^2} Var\left(\sum_{i=1}^t{l(S_i)}\right) \\
+    \intertext{By the independence of $S_i$}
+    & = \frac{1}{t^2} \sum_{i=1}^t{Var(l(S_i))} \\
+    \intertext{As per above}
+    & \leq \frac{1}{t^2} \sum_{i=1}^t{n^2 d} \\
+    & = \frac{n^2 d}{t}
+  \end{align*}
+\end{proof}
+
 \end{document}
 
