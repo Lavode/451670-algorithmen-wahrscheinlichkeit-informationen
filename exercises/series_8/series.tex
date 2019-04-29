@@ -132,14 +132,12 @@ We aim to show that $Var(l(S)) \leq n^2d$.
   \begin{align*}
     Var(l(S)) & = E[l(S)^2] - E[l(S)]^2 \\
               & = 2m \sum_{s \in S}{\left(\frac{1}{deg(s)}\right)} - n^2 \\
-    \intertext{$deg(v) \geq 1 \forall v \in V$}
-    & \leq 2m \sum_{s \in S}{(deg(s))} - n^2 \\
-    \intertext{$deg(v) \geq 1\ \forall v \in V \Rightarrow 2m \geq n$}
-    & \leq n \sum_{s \in S}{(deg(s))} - n^2 \\
-    \intertext{$deg(v) \leq d\ \forall v \in V$}
-    & \leq n \sum_{s \in S}{(d)} - n^2 \\
-    & = n^2 d - n^2 \\
-    & \leq n^2 d
+    \intertext{As $deg(v) \leq d\ \forall v \in V$, and $2m = \sum_{v \in V}{deg(v)} \leq \sum_{v \in V}{d} = nd$}
+    & \leq nd \sum_{s \in S}{\left(\frac{1}{deg(s)}\right)} - n^2 \\
+    & \leq nd \sum_{s \in S}{\left(1\right)} - n^2 \\
+    & \leq ndn - n^2 \\
+    & = n^2d - n^2 \\
+    & \leq n^2d
   \end{align*}
 \end{proof}
 
@@ -150,7 +148,7 @@ show that $Var(Z) \leq \frac{n^2 d}{t}$.
 
 \begin{proof}
   \begin{align*}
-    Var(Z) & = Var(\frac{1}{t} \sum_{i=1}^t{l(S_i)}) \\
+    Var(Z) & = Var\left(\frac{1}{t} \sum_{i=1}^t{l(S_i)}\right) \\
     \intertext{$Var(aX) = a^2 Var(X)$}
     & = \frac{1}{t^2} Var\left(\sum_{i=1}^t{l(S_i)}\right) \\
     \intertext{By the independence of $S_i$}
@@ -172,7 +170,7 @@ random variable from its expectation as:
 As such, for $0 < \epsilon \leq 1$, $0 < \delta \leq 1$:
 \begin{align*}
 	P[\abs{Z - n} \geq \epsilon n] & \leq \frac{Var(Z)}{\epsilon^2 n^2} \\
-	\intertext{Using the upper limit of the variance from above}
+	\intertext{Using the upper bound of the variance from above}
 	& \leq \frac{n^2 d}{t \epsilon^2 n^2} \\
 	& = \frac{d}{t \epsilon^2}
 \end{align*}
