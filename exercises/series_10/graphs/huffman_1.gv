@@ -1,0 +1,53 @@
+digraph G {
+	N2 [label="2", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N3 [label="3", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N4 [label="4", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N5 [label="5", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N6 [label="6", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N7 [label="7", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N8 [label="8", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N9 [label="9", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N10 [label="10", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N11 [label="11", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N12 [label="12", fontcolor=blue, fontsize=16, width=2, shape=box];
+
+	E1 [label="2"];
+	E1 -> N2;
+	E1 -> N12;
+
+	E2 [label="5"];
+	E2 -> E1;
+	E2 -> N4;
+
+	E3 [label="10"];
+	E3 -> E2;
+	E3 -> N6;
+
+	E4 [label="11"];
+	E4 -> N7;
+	E4 -> N8;
+
+	E5 [label="21"];
+	E5 -> E3;
+	E5 -> E4;
+
+	E6 [label="4"];
+	E6 -> N3;
+	E6 -> N11;
+
+	E7 [label="7"];
+	E7 -> E6;
+	E7 -> N10;
+
+	E8 [label="8"];
+	E8 -> N5;
+	E8 -> N9;
+
+	E9 [label="15"];
+	E9 -> E7;
+	E9 -> E8;
+
+	E10 [label="36"];
+	E10 -> E5;
+	E10 -> E9;
+}

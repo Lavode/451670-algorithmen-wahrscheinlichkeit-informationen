@@ -1,0 +1,169 @@
+\documentclass[a4paper]{scrreprt}
+
+% Uncomment to optimize for double-sided printing.
+% \KOMAoptions{twoside}
+
+% Set binding correction manually, if known.
+% \KOMAoptions{BCOR=2cm}
+
+% Localization options
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Enhanced verbatim sections. We're mainly interested in
+% \verbatiminput though.
+\usepackage{verbatim}
+
+% PDF-compatible landscape mode.
+% Makes PDF viewers show the page rotated by 90°.
+\usepackage{pdflscape}
+
+% Advanced tables
+\usepackage{tabu}
+\usepackage{longtable}
+
+% Fancy tablerules
+\usepackage{booktabs}
+
+% Graphics
+\usepackage{graphicx}
+
+% Current time
+\usepackage[useregional=numeric]{datetime2}
+
+% Float barriers.
+% Automatically add a FloatBarrier to each \section
+\usepackage[section]{placeins}
+
+% Custom header and footer
+\usepackage{fancyhdr}
+
+\usepackage{geometry}
+\usepackage{layout}
+
+% Math tools
+\usepackage{mathtools}
+% Math symbols
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsthm}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+
+\pagestyle{plain}
+% \fancyhf{}
+% \lhead{}
+% \lfoot{}
+% \rfoot{}
+% 
+% Source code & highlighting
+\usepackage{listings}
+
+% Convenience commands
+\newcommand{\mailsubject}{451670- Algorithmen, Wahrscheinlichkeit, Informationen - Series 10}
+\newcommand{\maillink}[1]{\href{mailto:#1?subject=\mailsubject}
+                               {#1}}
+
+% Should use this command wherever the print date is mentioned.
+\newcommand{\printdate}{\today}
+
+\subject{451670 - Algorithmen, Wahrscheinlichkeit, Informationen}
+\title{Series 10}
+
+\author{Michael Senn \maillink{michael.senn@students.unibe.ch} - 16-126-880}
+
+\date{\printdate}
+
+% Needs to be the last command in the preamble, for one reason or
+% another. 
+\usepackage{hyperref}
+
+
+\begin{document}
+\maketitle
+
+
+\setcounter{chapter}{9}
+\chapter{Series 10}
+
+\section{Data processing inequality}
+
+\section{Encoding sum of dice}
+
+Let $Z_1, Z_2 \sim Un(\{1, 2, 3, 4, 5, 6\})$, let $Z := Z_1 + Z_2$. As per its
+construction:
+\[
+	P(Z = z) = P(Z_1 < z, Z_2 = z - Z_1) = P(Z_1 < z) \cdot P(Z_z = z -Z_1) = P(Z_1 < z) \cdot \frac{1}{6}\ \forall\ 2 \leq z \leq 12
+\]
+
+Hence:
+\\
+
+\begin{tabu}{ll}
+	\toprule
+	z & $P(Z = z)$ \\
+	\midrule
+	2  & $1 / 36$ \\
+	3  & $2 / 36$ \\
+	4  & $3 / 36$ \\
+	5  & $4 / 36$ \\
+	6  & $5 / 36$ \\
+	7  & $6 / 36$ \\
+	8  & $5 / 36$ \\
+	9  & $4 / 36$ \\
+	10 & $3 / 36$ \\
+	11 & $2 / 36$ \\
+	12 & $1 / 36$ \\
+	\bottomrule
+\end{tabu}
+\\
+
+By the definition of the entropy:
+
+\begin{align*}
+	H(Z) & = -\sum_{z \in Z}{\left(P(Z = z) \cdot lb(P(Z=z)\right)} \\
+	& \approx 3.21
+\end{align*}
+
+We can now derive a prefix code via Huffman coding, shown in figure
+\ref{fig:huffman_coding}. Leaf nodes in blue are the values, intermediary nodes
+in black show the combined weight (in fractions of $36$) of all nodes below,
+used during construction of the graph.
+
+A concrete encoding $C$ can be derived by treating each left-going edge as a $0$,
+and each right-going as a $1$, with the encoded value of $z$ being the sequence
+of $\{0, 1\}$ output during traversal of the graph. As such, the depth of each
+value's node directly corresponds with the length of its encoding.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{graphs/huffman_1.png}
+	\caption{Huffman coding for $Z$}
+	\label{fig:huffman_coding}
+\end{figure}
+
+The expected length of an encoding of $Z$ is then given as:
+\begin{align*}
+	E[\abs{C(Z)}] & = \sum_{z \in Z}{P(Z = z) \cdot \abs{C(Z)}} \\
+	& = \frac{1}{36} (\abs{C(2)} + \abs{C(12)}) 
+	+ \frac{2}{36} (\abs{C(3)} + \abs{C(11)}) 
+	+ \frac{3}{36} (\abs{C(4)} + \abs{C(10)}) \\
+	& + \frac{4}{36} (\abs{C(5)} + \abs{C(9)})
+	+ \frac{5}{36} (\abs{C(6)} + \abs{C(8)})
+	+ \frac{6}{36} (\abs{C(7)}) \\
+	& = \frac{1}{36} (5 + 5)
+	+ \frac{2}{36} (4 + 4)
+	+ \frac{3}{36} (4 + 3) \\
+	& + \frac{4}{36} (3 + 3)
+	+ \frac{5}{36} (3 + 3)
+	+ \frac{6}{36} (3) \\
+	& \approx 3.31 \\
+	& \leq H(Z) + 1
+\end{align*}
+
+\section{Codes}
+
+\section{Perfect security}
+
+\end{document}
+
