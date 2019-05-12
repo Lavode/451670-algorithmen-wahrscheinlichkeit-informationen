@@ -49,6 +49,7 @@
 \usepackage{amsthm}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
 \pagestyle{plain}
 % \fancyhf{}
@@ -121,7 +122,7 @@ Hence:
 By the definition of the entropy:
 
 \begin{align*}
-	H(Z) & = -\sum_{z \in Z}{\left(P(Z = z) \cdot lb(P(Z=z)\right)} \\
+	H(Z) & = -\sum_{z \in Z}{\left(P(Z = z) \cdot \log_2(P(Z=z)\right)} \\
 	& \approx 3.21
 \end{align*}
 
@@ -162,6 +163,70 @@ The expected length of an encoding of $Z$ is then given as:
 \end{align*}
 
 \section{Codes}
+
+Let $S$ be a random variable, with $P(S = s_1) = P(S = s_2) = 0.3$, $P(S = s_3)
+= 0.2$, $P(S = s_4) = P(S = s_5) = 0.1$.
+
+\subsection{Shannon coding $C_A$}
+
+Let $p_i := P(S = s_i)$, $l_i := \ceil{-\log_2(p_i)}$. Let $(x)_2$ be the
+binary expansion of $x$. A Shannon coding $C_A$ may be derived as shown in
+table \ref{tbl:shannon_coding_1}.
+\\
+
+\begin{table}
+	\centering
+	\begin{tabu}{llllll}
+		\toprule
+		n & $p_i$ & $l_i$ & $\sum_{i = 0}^{n - 1}{p_i}$ & $(\sum_{i = 0}^{n - 1}{p_i})_2$ & $C_A(s_n)$ \\
+		\midrule
+		1 & 0.3 & 2 & $0$ & $0.00$ & $00$ \\
+		2 & 0.3 & 2 & $0.3$ & $0.01\ldots$ & $01$ \\
+		3 & 0.2 & 3 & $0.6$ & $0.100\ldots$ & $100$ \\
+		4 & 0.1 & 4 & $0.8$ & $0.1100\ldots$ & $1100$ \\
+		5 & 0.1 & 4 & $0.9$ & $0.1110\ldots$ & $1110$ \\
+		\bottomrule
+	\end{tabu}
+	\caption{Shannon coding $C_A$}
+	\label{tbl:shannon_coding_1}
+\end{table}
+
+Then:
+\begin{align*}
+	E[\abs{C_A(S)}] = 0.3 \cdot (2 + 2) + 0.2 \cdot 3 + 0.1 \cdot (4 + 4) = 2.6
+\end{align*}
+
+\subsection{Shorter code $C_B$}
+
+As in the previous exercise we can derive a Huffman coding as shown in figure
+\ref{fig:huffman_coding_2}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{graphs/huffman_2.png}
+	\caption{Huffman coding $C_B$}
+	\label{fig:huffman_coding_2}
+\end{figure}
+
+Its average word length is given by:
+\begin{align*}
+	E[\abs{C_B(S)}] = 0.3 \cdot (2 + 2) + 0.2 \cdot 2 + 0.1 \cdot (3 + 3) = 2.2 < 2.6
+\end{align*}
+
+\subsection{$E[\abs{F_C(S_C)}] = H(S_C)$}
+
+Let $S_C \sim Un(\{0, 1\})$. Let
+\[
+	F_C(s) :=
+	\begin{cases}
+		0, & \text{if } s = 0 \\
+		1, & \text{if } s = 1
+	\end{cases}
+\]
+
+Clearly $\abs{F_C(s)} = 1\ \forall\ s \in S_c \Rightarrow E[\abs{F_C(S_C)}] =
+1$, and $H(S_C) = -(0.5 \log_2(0.5) + 0.5 \log_2(0.5)) = 1$.
+
 
 \section{Perfect security}
 

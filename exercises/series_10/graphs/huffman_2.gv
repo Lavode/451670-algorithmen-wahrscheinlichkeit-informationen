@@ -1,0 +1,23 @@
+digraph G {
+	N1 [label="S1", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N2 [label="S2", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N3 [label="S3", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N4 [label="S4", fontcolor=blue, fontsize=16, width=2, shape=box];
+	N5 [label="S5", fontcolor=blue, fontsize=16, width=2, shape=box];
+
+	E1 [label="2"];
+	E1 -> N4;
+	E1 -> N5;
+
+	E2 [label="4"];
+	E2 -> E1;
+	E2 -> N3;
+
+	E3 [label="6"];
+	E3 -> N1;
+	E3 -> N2;
+
+	E4 [label="10"];
+	E4 -> E2;
+	E4 -> E3;
+}
